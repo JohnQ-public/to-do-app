@@ -1,6 +1,6 @@
 function onReady() {
 
-  const toDos = [];
+  let toDos = [];
   const addToDoForm = document.getElementById('addToDoForm');
   let id = 0;
 
@@ -11,9 +11,9 @@ function onReady() {
     toDos.push({
       title: newToDoText.value,
       complete: false,
-      id: id
+      id: id++
     });
-    id++;
+    //id++;
     newToDoText.value = '';
     renderTheUI();
   }
@@ -35,17 +35,23 @@ function onReady() {
       newLi.appendChild(checkbox);
       newLi.appendChild(deleteLi);
 
-      deleteLi.addEventListener('click', remove => {
-        const selectLi = toDos.filter(select => toDo.id === newLi.id)
-        toDos.splice(selectLi, 1);
+      deleteLi.addEventListener('click', () => {
+        // const selectLi = toDos.filter(select => toDo.id === newLi.id)
+        // toDos.splice(selectLi, 1);
+        toDos = remove(toDo.id);
         renderTheUI();
       })
     });
   }
 
+  function remove(id){
+    return toDos.filter(toDo => toDo.id !== id);
+  }
+
   addToDoForm.addEventListener('submit', event => {
     event.preventDefault();
     createNewToDo();
+    //rendertheUI();
   });
 
   renderTheUI();
